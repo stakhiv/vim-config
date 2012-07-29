@@ -3,7 +3,7 @@ vim-config
 
 Fetch:
 ```bash
-git clone --recursive https://github.com/stakhiv/vim-config.git
+git clone --recursive https://github.com/stakhiv/vim-config.git ~/.vim
 ```
 Link:
 ```bash
