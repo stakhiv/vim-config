@@ -10,4 +10,4 @@ Link:
 ln -s ~/.vim/vimrc ~/.vimrc
 ```
 
-Run ```bash :BundleInstall``` in vim
+Finally, run ```:BundleInstall``` in vim
