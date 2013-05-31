@@ -6,33 +6,39 @@ call vundle#rc()
 
 " Bundles
 Bundle 'gmarik/vundle'
-Bundle 'molokai'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
-Bundle 'ervandew/supertab'
 Bundle 'msanders/snipmate.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'L9'
-Bundle 'FuzzyFinder'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'mattn/zencoding-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'fholgado/minibufexpl.vim'
+Bundle 'tpope/vim-sleuth'
+Bundle 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'pangloss/vim-javascript'
+Bundle 'majutsushi/tagbar'
+Bundle 'vcscommand.vim'
+
+" Color themes
+Bundle 'molokai'
+Bundle 'sjl/badwolf'
 
 " Not sure if needed
-Bundle 'Indent-Guides'
-Bundle "pangloss/vim-javascript"
+Bundle 'godlygeek/tabular'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'marijnh/tern_for_vim'
+" Bundle 'AutoComplPop'
+" Bundle 'paradigm/vim-multicursor'
+" Bundle 'safetydank/vim-gitgutter'
 
-colorscheme molokai
+colorscheme badwolf
 syntax on
 set background=dark
 set mouse=a
-
 set modelines=0
-
-
 
 set scrolloff=3
 set autoindent
@@ -48,8 +54,9 @@ set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
-set relativenumber
-set undofile
+set number
+" set relativenumber
+" set undofile
 
 let mapleader = ","
 
@@ -119,13 +126,15 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
-set si "Smart indent
+" set si "Smart indent
 set wrap "Wrap lines
 
 set textwidth=79
 set formatoptions=qrn1
 set colorcolumn=85
 set foldenable
+
+set backspace=2
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -149,3 +158,24 @@ nnoremap <C-l> <C-w>l
 nmap <silent> <Leader>n :NERDTreeToggle<CR>
 
 let g:syntastic_enable_signs=1
+
+" SuperTab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
+
+map ; $a;<Esc>
+
+" MiniBufExplorer
+let g:miniBufExplUseSingleClick = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+
+map <Leader>t :TMiniBufExplorer<cr>
+
+" DelimitMate
+let g:delimitMate_expand_cr = 1
+
+" if $COLORTERM == 'gnome-terminal'
+"     set t_Co=256
+" endif
