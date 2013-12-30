@@ -6,35 +6,46 @@ call vundle#rc()
 
 " Bundles
 Bundle 'gmarik/vundle'
-Bundle 'scrooloose/nerdtree'
+" Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
-Bundle 'msanders/snipmate.vim'
+" Bundle 'tpope/vim-repeat'
+
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+
 Bundle 'tomtom/tcomment_vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
-Bundle 'fholgado/minibufexpl.vim'
+" Bundle 'fholgado/minibufexpl.vim'
 Bundle 'tpope/vim-sleuth'
-Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
+" Bundle 'mileszs/ack.vim'
+" Bundle 'kien/ctrlp.vim'
 Bundle 'pangloss/vim-javascript'
-Bundle 'majutsushi/tagbar'
-Bundle 'vcscommand.vim'
+" Bundle 'majutsushi/tagbar'
+" Bundle 'vcscommand.vim'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'marijnh/tern_for_vim'
+Bundle 'mattn/emmet-vim'
 
 " Color themes
 Bundle 'molokai'
 Bundle 'sjl/badwolf'
+Bundle 'altercation/vim-colors-solarized'
 
 " Not sure if needed
-Bundle 'godlygeek/tabular'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'marijnh/tern_for_vim'
-" Bundle 'AutoComplPop'
-" Bundle 'paradigm/vim-multicursor'
-" Bundle 'safetydank/vim-gitgutter'
+" Bundle 'godlygeek/tabular'
+" Bundle 'terryma/vim-multiple-cursors'
 
-colorscheme badwolf
+Bundle 'Shougo/vimproc.vim'
+Bundle 'Shougo/unite.vim'
+
+Bundle 'dbext.vim'
+Bundle 'bling/vim-airline'
+Bundle 'mhinz/vim-signify'
+
+colorscheme molokai
 syntax on
 set background=dark
 set mouse=a
@@ -126,7 +137,7 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
-" set si "Smart indent
+set si "Smart indent
 set wrap "Wrap lines
 
 set textwidth=79
@@ -155,27 +166,44 @@ nnoremap <C-l> <C-w>l
 
 
 " NERDTree
-nmap <silent> <Leader>n :NERDTreeToggle<CR>
+nmap <silent> <Leader>n :vs.<CR>
+let g:netrw_liststyle = 3
 
 let g:syntastic_enable_signs=1
 
 " SuperTab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
+" let g:SuperTabDefaultCompletionType = 'context'
+" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+" let g:SuperTabLongestEnhanced = 1
+" let g:SuperTabLongestHighlight = 1
 
 map ; $a;<Esc>
 
 " MiniBufExplorer
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
+" let g:miniBufExplUseSingleClick = 1
+" let g:miniBufExplMapCTabSwitchBufs = 1
 
-map <Leader>t :TMiniBufExplorer<cr>
+" map <Leader>t :MBEToggle<cr>
 
 " DelimitMate
 let g:delimitMate_expand_cr = 1
 
-" if $COLORTERM == 'gnome-terminal'
-"     set t_Co=256
-" endif
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+" let g:NERDTreeIgnore = ['\.pyc$']
+
+" DBEXT
+let g:dbext_default_profile_nav_dev = 'type=PGSQL:user=navigator:passwd=12321q:dbname=dev:host=192.168.135.19:port=5433'
+
+" UNITE
+nmap <silent> <Leader>t :Unite buffer -auto-resize<CR>
+nmap <silent> <Leader>p :Unite file_rec<CR>
+" nmap <silent> <Leader>n :Unite file -vertical<CR>
+nmap <silent> <Leader>nn :Unite file -input=**/ -start-insert<CR>
+
+
+" Snipmate
+imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
