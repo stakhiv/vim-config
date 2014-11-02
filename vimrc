@@ -1,31 +1,34 @@
 set nocompatible
 filetype off
-filetype plugin indent on
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/vundle
+" call vundle#rc()
+call vundle#begin()
 
 " Bundles
 Bundle 'gmarik/vundle'
-" Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
-" Bundle 'tpope/vim-repeat'
-
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
+Bundle 'tpope/vim-repeat'
+Bundle 'gcmt/breeze.vim'
+Bundle 'Valloric/MatchTagAlways'
 
 Bundle 'tomtom/tcomment_vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
-" Bundle 'fholgado/minibufexpl.vim'
+Bundle 'fholgado/minibufexpl.vim'
 Bundle 'tpope/vim-sleuth'
-" Bundle 'mileszs/ack.vim'
-" Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-unimpaired'
+" Bundle 'tpope/vim-vinegar'
+Bundle 'scrooloose/nerdtree'
+Bundle "chrisbra/NrrwRgn"
+Bundle 'fatih/vim-go'
+Bundle 'tpope/vim-fugitive'
+
 Bundle 'pangloss/vim-javascript'
-" Bundle 'majutsushi/tagbar'
-" Bundle 'vcscommand.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'vcscommand.vim'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'marijnh/tern_for_vim'
 Bundle 'mattn/emmet-vim'
 
@@ -33,19 +36,37 @@ Bundle 'mattn/emmet-vim'
 Bundle 'molokai'
 Bundle 'sjl/badwolf'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'zenorocha/dracula-theme'
+Bundle 'abra/vim-abra'
+Bundle 'daddye/soda.vim'
+Bundle 'john2x/flatui.vim'
+Bundle 'nice/sweater'
 
 " Not sure if needed
-" Bundle 'godlygeek/tabular'
-" Bundle 'terryma/vim-multiple-cursors'
+Bundle 'godlygeek/tabular'
 
 Bundle 'Shougo/vimproc.vim'
 Bundle 'Shougo/unite.vim'
+Bundle 'tsukkee/unite-tag'
 
 Bundle 'dbext.vim'
 Bundle 'bling/vim-airline'
 Bundle 'mhinz/vim-signify'
 
-colorscheme molokai
+
+" NEW
+Bundle 'gundo'
+Bundle 'mhinz/vim-startify'
+Bundle 'AndrewRadev/splitjoin.vim'
+Bundle 'int3/vim-extradite'
+Bundle 'vasconcelloslf/vim-interestingwords'
+Bundle 'kshenoy/vim-signature'
+Bundle 'haya14busa/incsearch.vim'
+
+
+call vundle#end()
+filetype plugin indent on
+colorscheme badwolf
 syntax on
 set background=dark
 set mouse=a
@@ -60,13 +81,14 @@ set wildmenu
 set wildmode=list:longest
 set noerrorbells
 set novisualbell
-set cursorline
+" set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set number
-" set relativenumber
+set lazyredraw
+set relativenumber
 " set undofile
 
 let mapleader = ","
@@ -83,7 +105,7 @@ nnoremap <leader><space> :noh<cr>
 
 
 set list
-set listchars=tab:#\ ,eol:¬
+set listchars=tab:#\ ,eol:Â¬
 
 " Disabling arrow keys. Use hjkl, Luke!
 nnoremap <up> <nop>
@@ -98,6 +120,10 @@ nnoremap j gj
 nnoremap k gk
 
 
+" Map jk to <Esc>
+imap jk <Esc>
+
+
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -108,6 +134,8 @@ endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
+set fileencoding=utf-8
+set fileencodings=utf-8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
@@ -166,24 +194,21 @@ nnoremap <C-l> <C-w>l
 
 
 " NERDTree
-nmap <silent> <Leader>n :vs.<CR>
-let g:netrw_liststyle = 3
+" nmap <silent> <Leader>n :vs.<CR>
+" let g:netrw_liststyle = 3
+nmap <silent> <Leader>n :NERDTreeToggle<CR>
+let g:NERDTreeIgnore = ['\.pyc$']
 
 let g:syntastic_enable_signs=1
 
-" SuperTab
-" let g:SuperTabDefaultCompletionType = 'context'
-" let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-" let g:SuperTabLongestEnhanced = 1
-" let g:SuperTabLongestHighlight = 1
-
-map ; $a;<Esc>
+" map ; A;<Esc>
+imap jk <Esc>
 
 " MiniBufExplorer
 " let g:miniBufExplUseSingleClick = 1
 " let g:miniBufExplMapCTabSwitchBufs = 1
 
-" map <Leader>t :MBEToggle<cr>
+map <Leader>mbt :MBEToggle<cr>
 
 " DelimitMate
 let g:delimitMate_expand_cr = 1
@@ -192,18 +217,50 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-" let g:NERDTreeIgnore = ['\.pyc$']
-
 " DBEXT
 let g:dbext_default_profile_nav_dev = 'type=PGSQL:user=navigator:passwd=12321q:dbname=dev:host=192.168.135.19:port=5433'
 
 " UNITE
 nmap <silent> <Leader>t :Unite buffer -auto-resize<CR>
-nmap <silent> <Leader>p :Unite file_rec<CR>
+nmap <silent> <Leader>p :Unite file_rec/async -start-insert<CR>
+nmap <silent> <Leader>faf :Unite grep:.: -no-quit -direction="bottom"<CR>
 " nmap <silent> <Leader>n :Unite file -vertical<CR>
-nmap <silent> <Leader>nn :Unite file -input=**/ -start-insert<CR>
+" nmap <silent> <Leader>nn :Unite file -input=**/ -start-insert<CR>
+
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts =
+        \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 
-" Snipmate
-imap <C-J> <esc>a<Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger = "<c-j>"
+" let g:UltiSnipsListSnippets = "<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+
+
+au FileType python nmap <Leader>gd :YcmCompleter GoToDefinition<CR>
+
+
+let g:signify_vcs_list = [ 'git', 'hg' ]
+
+
+nmap <leader>w :w!<cr>
+
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+let g:airline_powerline_fonts=1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+vnoremap J :m '>+1<CR>gv
+vnoremap K :m '<-2<CR>gv
