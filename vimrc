@@ -1,7 +1,6 @@
 set nocompatible
 filetype off
 
-
 "{{{ Vundle plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -9,79 +8,62 @@ call vundle#begin()
 Bundle 'VundleVim/Vundle.vim'
 
 " UI
-Bundle 'gundo'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-repeat'
-" Bundle 'Valloric/MatchTagAlways'
+Bundle 'simnalamburt/vim-mundo'
+Bundle 'Valloric/MatchTagAlways'
 Bundle 'scrooloose/nerdtree'
-Bundle 'majutsushi/tagbar'
+Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'vasconcelloslf/vim-interestingwords'
 Bundle 'kshenoy/vim-signature'
 Bundle 'haya14busa/incsearch.vim'
-Bundle 'airblade/vim-rooter'
 Bundle 'mhinz/vim-startify'
 
 " Misc
-Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'tpope/vim-vinegar'
-Bundle 'jpalardy/vim-slime'
+Bundle 'tpope/tpope-vim-abolish'
+Bundle 'tpope/vim-repeat'
+Bundle 'airblade/vim-rooter'
 
 " Languages
 Bundle 'fatih/vim-go'
 Bundle 'pangloss/vim-javascript'
-Bundle 'rust-lang/rust.vim'
 
 " Text editing
 Bundle 'tpope/vim-surround'
-Bundle 'godlygeek/tabular'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'Raimondi/delimitMate'
-" Bundle 'easymotion/vim-easymotion'
 
 " Completion
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
-Bundle 'marijnh/tern_for_vim'
+Bundle 'neoclide/coc.nvim'
+Bundle 'w0rp/ale'
 
 " VCS
 Bundle 'tpope/vim-fugitive'
-Bundle 'mhinz/vim-signify'
+Bundle 'airblade/vim-gitgutter'
 
 " Color themes
-Bundle 'sjl/badwolf'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Bundle 'abra/vim-obsidian'
-Bundle 'daddye/soda.vim'
-Bundle 'john2x/flatui.vim'
-Bundle 'nice/sweater'
-Bundle 'junegunn/seoul256.vim'
-Bundle 'whatyouhide/vim-gotham'
-Bundle 'jordwalke/flatlandia'
-Bundle 'gosukiwi/vim-atom-dark'
-Bundle 'fatih/molokai'
 Bundle 'joshdick/onedark.vim'
-Bundle 'joshdick/airline-onedark.vim'
-Bundle 'mkarmona/colorsbox'
+Bundle 'ayu-theme/ayu-vim'
+Bundle 'dracula/vim'
 
-" Unite
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimproc.vim'
-Bundle 'tsukkee/unite-tag'
+" Search
+Bundle 'ctrlpvim/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
 
-" DB
-" Bundle 'dbext.vim'
+" Experiments
+" Bundle 'vimwiki/vimwiki'
 
 call vundle#end()
 " Vundle plugins }}}
 
 
+" set termguicolors
 filetype plugin indent on
-colorscheme colorsbox-material
-syntax on
 set background=dark
+set t_Co=256
+colorscheme dracula
+syntax on
 set mouse=a
 set modelines=0
 
@@ -94,7 +76,7 @@ set wildmenu
 set wildmode=list:longest
 set noerrorbells
 set novisualbell
-" set cursorline
+set cursorline
 set ttyfast
 " set ruler
 set backspace=indent,eol,start
@@ -103,7 +85,7 @@ set number
 " set relativenumber
 set lazyredraw
 " set undofile
-hi vertsplit guifg=fg guibg=bg
+" hi vertsplit guifg=black guibg=bg
 
 let mapleader = ","
 
@@ -117,6 +99,8 @@ set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
 
+" Set focus on new :vs window
+set splitright
 
 set list
 set listchars=tab:│\ ,eol:¬
@@ -135,7 +119,7 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-"" no one is really happy until you have this shortcuts
+" No one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Wq wq
@@ -154,13 +138,12 @@ map g/ <Plug>(incsearch-stay)
 vnoremap J :m '>+1<CR>gv
 vnoremap K :m '<-2<CR>gv
 
-"" Vmap for maintain Visual Mode after shifting > and <
+" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
 vmap > >gv
 
 " Map jk to <Esc>
 imap jk <Esc>
-
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -170,7 +153,10 @@ if has("gui_running")
     set guioptions-=L  " Remove left-hand scroll bar
     set t_Co=256
     set guitablabel=%M\ %t
-    set guifont=Menlo\ for\ Powerline
+    " set guifont=Menlo\ for\ Powerline
+    " set guifont=Hack
+    set macligatures
+    set guifont=Fira\ Code:h12
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -182,19 +168,13 @@ set fileencodings=utf-8
 set ffs=unix,dos,mac
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Indentation
 set smarttab
 set shiftwidth=4
 set tabstop=4
@@ -207,20 +187,15 @@ set wrap "Wrap lines
 set textwidth=79
 set formatoptions=qrn1
 set colorcolumn=80
-set foldenable
-
 set backspace=2
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
+
+" Buffer search for cursor words
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
 
-" Window navigation
+" Window navigation without <C-w>
 nnoremap <leader>w <C-w>v<C-w>lremap <leader>w <C-w>v<C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -228,7 +203,28 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 
-" NERDTree
+" The Silver Searcher as grep
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+  " Use ag as Ack command
+  if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+  endif
+endif
+
+" Search for text in all files
+nmap <silent> <Leader>faf :Ack!<space>
+vmap <silent> <Leader>faf y:Ack!<space>'<C-r>"'
+
+" NERDTree config
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
@@ -242,62 +238,114 @@ nmap <silent> <Leader>n :NERDTreeToggle<CR>
 nmap <silent> <Leader>nf :NERDTreeFind<CR>
 
 
-" Syntastic
-let g:syntastic_enable_signs=1
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501'
-
-
 " vim-go
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_code_completion_enabled = 0
 
+" Use coc.vim to display doc hint, as godoc is so sloooow
+let g:go_doc_keywordprg_enabled = 0
+
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 " DelimitMate
 let g:delimitMate_expand_cr = 1
 
-
-" UNITE
-nmap <silent> <Leader>t :Unite buffer -auto-resize -start-insert<CR>
-nmap <silent> <Leader>p :Unite file_rec/async -start-insert<CR>
-nmap <silent> <Leader>faf :Unite grep:.: -no-quit -direction="bottom"<CR>
-
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-        \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-endif
-
-
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
-
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger = "<c-j>"
 
-
-au FileType python nmap <Leader>gd :YcmCompleter GoToDefinition<CR>
-
+" Display file changes for Git and Mercurial only
 let g:signify_vcs_list = [ 'git', 'hg' ]
 
-" map <leader>cd :cd %:p:h<cr>:pwd<cr>
+" Autocommands for indentation per file type
+:autocmd Filetype ruby set softtabstop=2
+:autocmd Filetype ruby set sw=2
+:autocmd Filetype ruby set ts=2
 
-let g:airline_theme='onedark'
-let g:airline_powerline_fonts=1
-let g:airline_enable_branch = 1
+:autocmd Filetype sh set softtabstop=2
+:autocmd Filetype sh set sw=2
+:autocmd Filetype sh set ts=2
+
+:autocmd Filetype php set softtabstop=4
+:autocmd Filetype php set sw=4
+:autocmd Filetype php set ts=4
+
+:autocmd Filetype javascript set softtabstop=2
+:autocmd Filetype javascript set sw=2
+:autocmd Filetype javascript set ts=2
+
+
+" CtrlP bindings
+nmap <silent> <Leader>p :CtrlP<CR>
+nmap <silent> <Leader>g :CtrlPTag<CR>
+nmap <silent> <Leader>t :CtrlPBuffer<CR>
+
+" Open current directory view
+map <leader>ff :e %:p:h<cr>
+
+" ALE config
+nmap <silent> <Leader>e <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>E <Plug>(ale_next_wrap)
+
+" Autocommands for coc.vim LSP commands
+au FileType php nmap <silent> gd <Plug>(coc-definition)
+au FileType php nmap <silent> gy <Plug>(coc-type-definition)
+au FileType php nmap <silent> gi <Plug>(coc-implementation)
+au FileType php nmap <silent> gr <Plug>(coc-references)
+
+au FileType ruby nmap <silent> gd <Plug>(coc-definition)
+au FileType ruby nmap <silent> gy <Plug>(coc-type-definition)
+au FileType ruby nmap <silent> gi <Plug>(coc-implementation)
+au FileType ruby nmap <silent> gr <Plug>(coc-references)
+
+au FileType javascript nmap <silent> gd <Plug>(coc-definition)
+au FileType javascript nmap <silent> gy <Plug>(coc-type-definition)
+au FileType javascript nmap <silent> gi <Plug>(coc-implementation)
+au FileType javascript nmap <silent> gr <Plug>(coc-references)
+
+au FileType go nmap <silent> gr <Plug>(coc-references)
+
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Quick list of actions
+nmap <silent> <Leader>l :CocList<CR>
+
+" Custom statusline config
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{FugitiveStatusline()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
