@@ -46,13 +46,18 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'joshdick/onedark.vim'
 Bundle 'ayu-theme/ayu-vim'
 Bundle 'dracula/vim'
+Bundle 'lithammer/vim-eighties'
 
 " Search
 Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 
 " Experiments
-" Bundle 'vimwiki/vimwiki'
+Bundle 'vimwiki/vimwiki'
+
+" Markdown
+Bundle 'godlygeek/tabular'
+Bundle 'plasticboy/vim-markdown'
 
 call vundle#end()
 " Vundle plugins }}}
@@ -62,7 +67,7 @@ call vundle#end()
 filetype plugin indent on
 set background=dark
 set t_Co=256
-colorscheme dracula
+colorscheme onedark
 syntax on
 set mouse=a
 set modelines=0
@@ -86,6 +91,8 @@ set number
 set lazyredraw
 " set undofile
 " hi vertsplit guifg=black guibg=bg
+
+set shortmess+=a
 
 let mapleader = ","
 
@@ -153,8 +160,6 @@ if has("gui_running")
     set guioptions-=L  " Remove left-hand scroll bar
     set t_Co=256
     set guitablabel=%M\ %t
-    " set guifont=Menlo\ for\ Powerline
-    " set guifont=Hack
     set macligatures
     set guifont=Fira\ Code:h12
 endif

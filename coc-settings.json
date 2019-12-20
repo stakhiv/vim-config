@@ -1,0 +1,22 @@
+{
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+            "filetypes": ["go"]
+        }
+    },
+    "suggest.noselect": false,
+    "suggest.timeout": 500,
+    "suggest.minTriggerInputLength": 2,
+
+    "solargraph.transport": "external",
+    "solargraph.externalServer": {
+      "host": "localhost",
+      "port": 7658
+    },
+    "gopls": {
+        "usePlaceholders": true,
+        "completeUnimported": true
+    }
+}
